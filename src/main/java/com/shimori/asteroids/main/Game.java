@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.shimori.asteroids.managers.GameInputProcessor;
 import com.shimori.asteroids.managers.GameKeys;
+import com.shimori.asteroids.managers.GameStateManager;
 
 
 public class Game implements ApplicationListener{
@@ -14,6 +15,8 @@ public class Game implements ApplicationListener{
 	public static int HEIGHT;
 	
 	public static OrthographicCamera camera;
+	
+	private GameStateManager gsm;
 	
 	public void create(){
 		
@@ -25,6 +28,8 @@ public class Game implements ApplicationListener{
 		camera.update();
 		
 		Gdx.input.setInputProcessor(new GameInputProcessor());
+		
+		gsm = new GameStateManager();
 	}
 	
 	public void render(){
@@ -33,13 +38,8 @@ public class Game implements ApplicationListener{
 		Gdx.gl.glClearColor(0,0,0,1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		if (GameKeys.isPressed(GameKeys.SPACE)) {
-			System.out.println("SPACE");
-		}
-		
-		if (GameKeys.isPressed(GameKeys.ESCAPE)) {
-			System.out.println("ESCAPE");
-		}
+		gsm.update(Gdx.graphics.getDeltaTime());
+		gsm.draw();
 		
 		GameKeys.update();
 		
